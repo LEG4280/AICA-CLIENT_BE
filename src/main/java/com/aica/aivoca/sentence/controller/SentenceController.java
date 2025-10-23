@@ -4,9 +4,9 @@ import com.aica.aivoca.global.exception.dto.SuccessStatusResponse;
 import com.aica.aivoca.sentence.dto.SentenceGetResponseDto;
 import com.aica.aivoca.sentence.dto.SentenceRequestDto;
 import com.aica.aivoca.sentence.dto.SentenceResponseDto;
-import com.aica.aivoca.sentence.service.addSentenceService;
-import com.aica.aivoca.sentence.service.deleteSentenceService;
-import com.aica.aivoca.sentence.service.getSentenceService;
+import com.aica.aivoca.sentence.service.AddSentenceService;
+import com.aica.aivoca.sentence.service.DeleteSentenceService;
+import com.aica.aivoca.sentence.service.GetSentenceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,9 +18,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SentenceController {
 
-    private final addSentenceService addSentenceService;
-    private final getSentenceService getSentenceService;
-    private final deleteSentenceService deleteSentenceService;
+    private final AddSentenceService addSentenceService;
+    private final GetSentenceService getSentenceService;
+    private final DeleteSentenceService deleteSentenceService;
 
     @PostMapping
     public SuccessStatusResponse<SentenceResponseDto> addSentence(@RequestBody SentenceRequestDto requestDto) {

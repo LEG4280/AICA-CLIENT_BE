@@ -7,7 +7,7 @@ import com.aica.aivoca.global.exception.message.ErrorMessage;
 import com.aica.aivoca.global.exception.message.SuccessMessage;
 import com.aica.aivoca.word.dto.ExampleSentenceDto;
 import com.aica.aivoca.word.dto.MeaningDto;
-import com.aica.aivoca.word.dto.WordGetResponseDto;
+import com.aica.aivoca.wordinfo.dto.WordInfoDto;
 import com.aica.aivoca.wordinfo.external.AiDictionaryClient;
 import com.aica.aivoca.wordinfo.dto.AiExample;
 import com.aica.aivoca.wordinfo.dto.AiMeaning;
@@ -45,7 +45,7 @@ public class WordinfoService {
     );
 
     @Transactional
-    public SuccessStatusResponse<List<WordGetResponseDto>> lookupAndSaveWordIfNeeded(String wordText) {
+    public SuccessStatusResponse<List<WordInfoDto>> lookupAndSaveWordIfNeeded(String wordText) {
         if (wordText == null || wordText.trim().isEmpty() || wordText.equals("\"\"")) {
             throw new CustomException(ErrorMessage.WORD_TEXT_REQUIRED);
         }
@@ -96,12 +96,11 @@ public class WordinfoService {
             return new MeaningDto(m.getMean(), parts, examples);
         }).toList();
 
-        WordGetResponseDto responseDto = new WordGetResponseDto(word.getId(), word.getWord(), meaningDtos);
+        WordInfoDto responseDto = new WordInfoDto(word.getId(), word.getWord(), meaningDtos);
         SuccessMessage message = isNew
                 ? SuccessMessage.WORD_SAVED_FROM_AI
                 : SuccessMessage.WORD_FOUND_IN_DB;
 
-        // ⬇ 변경된 부분: List로 감싸고 제네릭 명시
-        return SuccessStatusResponse.<List<WordGetResponseDto>>of(message, List.of(responseDto));
+        return SuccessStatusResponse.<List<WordInfoDto>>of(message, List.of(responseDto));
     }
 }

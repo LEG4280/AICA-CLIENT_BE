@@ -1,7 +1,7 @@
 package com.aica.aivoca.wordinfo.controller;
 
 import com.aica.aivoca.global.exception.dto.SuccessStatusResponse;
-import com.aica.aivoca.word.dto.WordGetResponseDto;
+import com.aica.aivoca.wordinfo.dto.WordInfoDto;
 import com.aica.aivoca.wordinfo.service.WordinfoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +17,7 @@ public class WordinfoController {
     private final WordinfoService WordinfoService;
 
     @GetMapping
-    public ResponseEntity<SuccessStatusResponse<List<WordGetResponseDto>>> lookupWord(@RequestParam String word) {
+    public ResponseEntity<SuccessStatusResponse<List<WordInfoDto>>> lookupWord(@RequestParam String word) {
         return ResponseEntity.ok(
                 WordinfoService.lookupAndSaveWordIfNeeded(word)
         );

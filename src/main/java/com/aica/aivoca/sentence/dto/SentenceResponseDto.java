@@ -2,5 +2,5 @@ package com.aica.aivoca.sentence.dto;
 
 public record SentenceResponseDto(
         Long sentenceId,
-        Long userid,
+        Long userId,
         String sentence) {}

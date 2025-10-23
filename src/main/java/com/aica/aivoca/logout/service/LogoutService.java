@@ -1,7 +1,5 @@
 package com.aica.aivoca.logout.service;
 
-import com.aica.aivoca.global.exception.BusinessException;
-import com.aica.aivoca.global.exception.message.ErrorMessage;
 import com.aica.aivoca.login.repository.RefreshTokenRedisRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,15 +10,15 @@ public class LogoutService {
 
     private final RefreshTokenRedisRepository refreshTokenRedisRepository;
 
-    public void logout(Long userId, String authHeader) {
-
-        // Redis에 저장된 RefreshToken 조회
+    public void logout(Long userId) {
+        // Redis에 저장된 RefreshToken이 있으면 삭제
         String savedRefreshToken = refreshTokenRedisRepository.findByUserId(userId);
-        if (savedRefreshToken == null) {
-            throw new BusinessException(ErrorMessage.REFRESH_TOKEN_NOT_MATCH);
+        if (savedRefreshToken != null) {
+            refreshTokenRedisRepository.delete(userId);
         }
 
-        // RefreshToken 삭제
-        refreshTokenRedisRepository.delete(userId);
+        // RefreshToken이 없어도 무조건 성공으로 간주
+        // 별도 예외를 발생시키지 않음
+
     }
 }

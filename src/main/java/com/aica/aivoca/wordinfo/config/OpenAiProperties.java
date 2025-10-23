@@ -15,9 +15,9 @@ public class OpenAiProperties {
     private String apiKey;
     private String url;
 
-    @PostConstruct
-    public void debug() {
-        System.out.println("🔍 KEY: " + apiKey);
-        System.out.println("🔍 URL: " + url);
-    }
+//    @PostConstruct
+//    public void debug() {
+//        System.out.println("🔍 KEY: " + apiKey);
+//        System.out.println("🔍 URL: " + url);
+//    }
 }

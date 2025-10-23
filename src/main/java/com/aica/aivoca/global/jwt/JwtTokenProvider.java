@@ -4,7 +4,9 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -12,9 +14,12 @@ import javax.crypto.SecretKey;
 import java.util.Base64;
 import java.util.Date;
 
+
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class JwtTokenProvider {
+
 
     @Value("${jwt.secret}")
     private String secretKey;
@@ -24,6 +29,14 @@ public class JwtTokenProvider {
 
     @Value("${jwt.refresh-expiration}")
     private long refreshTokenValidity;
+
+    @PostConstruct
+    public void init() {
+        log.info("[JWT CONFIG] Access Token Expiration: {}", accessTokenValidity);
+        log.info("[JWT CONFIG] Refresh Token Expiration: {}", refreshTokenValidity);
+        log.info("[JWT CONFIG] Secret Key Prefix: {}", secretKey.substring(0, 5));
+    }
+
 
     private final SignatureAlgorithm SIGNATURE_ALGORITHM = SignatureAlgorithm.HS256;
 

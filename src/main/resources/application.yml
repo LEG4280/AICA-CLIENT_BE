@@ -55,7 +55,6 @@ serverName: green_server
 
 spring:
   config:
-    import: optional:dotenv:.env
     activate:
       on-profile: common
 

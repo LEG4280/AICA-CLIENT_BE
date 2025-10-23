@@ -35,4 +35,3 @@ out/
 .vscode/
 
 ### Auth ###
-.env

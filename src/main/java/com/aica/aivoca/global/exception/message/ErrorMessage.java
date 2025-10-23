@@ -32,7 +32,7 @@ public enum ErrorMessage {
     USER_ID_NOT_FOUND(HttpStatus.NOT_FOUND.value(), "사용자 아이디를 찾을 수 없습니다."),
     INVALID_PASSWORD(HttpStatus.UNAUTHORIZED.value(),"유효하지 않은 비밀번호입니다."),
     INVALID_REFRESH_TOKEN(HttpStatus.UNAUTHORIZED.value(),"유효하지 않은 리프레시토큰입니다."),
-    REFRESH_TOKEN_NOT_MATCH(HttpStatus.UNAUTHORIZED.value(),"리프레시토큰이 일차하지 않습니다."),
+    REFRESH_TOKEN_NOT_MATCH(HttpStatus.UNAUTHORIZED.value(),"리프레시토큰이 일치하지 않습니다."),
 
     // 단어 관련
     WORD_ID_REQUIRED(HttpStatus.BAD_REQUEST.value(), "단어 ID가 필요합니다."),

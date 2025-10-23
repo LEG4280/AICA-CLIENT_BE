@@ -8,6 +8,7 @@ import com.aica.aivoca.global.exception.message.ErrorMessage;
 import com.aica.aivoca.global.exception.message.SuccessMessage;
 import com.aica.aivoca.global.jwt.CustomUserDetails;
 import com.aica.aivoca.sentence.repository.SentenceRepository;
+import com.aica.aivoca.word.repository.SentenceWordRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -18,9 +19,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class deleteSentenceService {
+public class DeleteSentenceService {
 
     private final SentenceRepository sentenceRepository;
+    private final SentenceWordRepository sentenceWordRepository;
 
     @Transactional
     public SuccessStatusResponse<Void> deleteSentence(Long sentenceSpecificId) {
@@ -46,6 +48,8 @@ public class deleteSentenceService {
             throw new CustomException(ErrorMessage.FORBIDDEN_ACCESS);
         }
 
+        // 문장-단어 테이블 삭제
+        sentenceWordRepository.deleteBySentence(sentence);
 
         // 5. 문장 삭제
         sentenceRepository.delete(sentence); // 또는 sentenceRepository.deleteById(sentenceId);

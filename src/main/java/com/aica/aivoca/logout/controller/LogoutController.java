@@ -18,10 +18,10 @@ public class LogoutController {
 
     @PostMapping("/logout")
     public ResponseEntity<SuccessStatusResponse<Void>> logout(
-            @AuthenticationPrincipal CustomUserDetails userDetails,
-            @RequestHeader(value = "Authorization", required = false) String authHeader) {
+            @AuthenticationPrincipal CustomUserDetails userDetails) {
 
-        logoutService.logout(userDetails.userId(), authHeader);
+        logoutService.logout(userDetails.userId());
         return ResponseEntity.ok(SuccessStatusResponse.of(SuccessMessage.USER_LOGOUT_SUCCESS));
     }
+
 }

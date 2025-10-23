@@ -5,22 +5,25 @@ import com.aica.aivoca.global.exception.NotFoundException;
 import com.aica.aivoca.global.exception.dto.SuccessStatusResponse;
 import com.aica.aivoca.global.exception.message.ErrorMessage;
 import com.aica.aivoca.global.exception.message.SuccessMessage;
+import com.aica.aivoca.global.jwt.CustomUserDetails;
 import com.aica.aivoca.sentence.dto.SentenceGetResponseDto;
 import com.aica.aivoca.sentence.repository.SentenceRepository;
+
+import com.aica.aivoca.word.repository.SentenceWordRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import com.aica.aivoca.global.jwt.CustomUserDetails;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class getSentenceService {
+public class GetSentenceService {
 
     private final SentenceRepository sentenceRepository;
+    private final SentenceWordRepository sentenceWordRepository;
 
     @Transactional(readOnly = true)
     public SuccessStatusResponse<List<SentenceGetResponseDto>> getSentences(Long ignoredUserId, String search) {
@@ -37,10 +40,18 @@ public class getSentenceService {
         }
 
         List<SentenceGetResponseDto> result = sentences.stream()
-                .map(s -> new SentenceGetResponseDto(
-                        s.getId(),
-                        s.getUser() != null ? s.getUser().getId() : null,
-                        s.getSentence()))
+                .map(sentence -> {
+                    List<Long> wordIds = sentenceWordRepository.findBySentence_Id(sentence.getId()).stream()
+                            .map(sw -> sw.getWord().getId())
+                            .toList();
+
+                    return new SentenceGetResponseDto(
+                            sentence.getId(),
+                            wordIds,
+                            sentence.getUser() != null ? sentence.getUser().getId() : null,
+                            sentence.getSentence()
+                    );
+                })
                 .toList();
 
         return SuccessStatusResponse.of(SuccessMessage.SENTENCE_GET_SUCCESS, result);
