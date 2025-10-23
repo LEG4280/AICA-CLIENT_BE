@@ -21,6 +21,9 @@ configurations {
 
 repositories {
 	mavenCentral()
+	maven {
+		url "https://csspeechstorage.blob.core.windows.net/maven/"
+	}
 }
 
 dependencies {
@@ -70,6 +73,12 @@ dependencies {
 
 	// spring-dotenv
 	implementation 'me.paulschwarz:spring-dotenv:2.2.0'
+
+	// Microsoft Azure speech service
+	implementation 'com.microsoft.cognitiveservices.speech:client-sdk:1.45.0'
+	implementation group: 'com.microsoft.cognitiveservices.speech', name: 'client-sdk', version: "1.43.0", ext: "jar"
+	// WebSocket
+	implementation 'org.springframework.boot:spring-boot-starter-websocket'
 }
 
 tasks.named('test') {
