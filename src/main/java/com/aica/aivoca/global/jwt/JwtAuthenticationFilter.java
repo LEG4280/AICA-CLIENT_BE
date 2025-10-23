@@ -29,7 +29,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             "/api/voca",
             "/api/wordinfo",
             "/hc",
-            "/env"
+            "/env",
+            "/api/pronunciation",
+            "/ws/pronunciation"
     );
 
     @Override

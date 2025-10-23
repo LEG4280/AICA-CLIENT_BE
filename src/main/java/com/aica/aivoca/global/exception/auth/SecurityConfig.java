@@ -25,7 +25,8 @@ public class SecurityConfig {
             "/api/auth/**",
             "/api/login", "/api/reissue","/api/voca/**",
             "/api/wordinfo",
-            "/hc","/env",
+            "/hc","/env","/api/pronunciation/**",
+            "/ws/pronunciation",
     };
 
     @Bean
